@@ -1,0 +1,4 @@
+2012.12.21|19:10:11|111.222.333.444|http://www.aaa.com|http://www.bbb.com
+2012.12.21|19:10:11|111.222.333.444|http://www.123.com|http://www.321.com
+2012.11.22|19:10:11|111.222.333.444|http://www.test1.com|http://www.test2.com
+2012.08.21|22:01:01|123.321.122.222|www.yandex.com|www.ya.com

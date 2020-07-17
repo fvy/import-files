@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\UsersVisits;
+use SplFileObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,6 +14,7 @@ class UserVisitsController extends AbstractController
      */
     public function index()
     {
+
         $visitsArr = $this->getDoctrine()
             ->getRepository(UsersVisits::class)
             ->findAllVisits();
