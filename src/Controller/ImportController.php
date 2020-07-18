@@ -3,13 +3,15 @@
 namespace App\Controller;
 
 use SplFileObject;
-use App\Entity\UsersEnvironments;
-use App\Entity\UsersVisits;
+use App\Utils\ImportFiles;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ImportController extends AbstractController
 {
+    const USER_VISIT_FILE = "../data/user_visits.txt";
+    const USER_ENVS_FILE = "../data/user_envs.txt";
+
     /**
      * @Route("/import", name="import")
      */
@@ -17,58 +19,20 @@ class ImportController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        $i = 1;
-        $batchSize = 100;
+        $fileUserVisits = new SplFileObject(self::USER_VISIT_FILE);
+        $numOfVisits = (new ImportFiles($entityManager))
+            ->ImportFileVisits($fileUserVisits);
 
-        $fileUserVisits = new SplFileObject("../data/user_visits.txt");
-        while (!$fileUserVisits->eof()) {
-            [$date, $time, $ip, $from, $to] = $fileUserVisits->fgetcsv("|");
-
-            $usersVisits = new UsersVisits();
-            $usersVisits->setVisitDate(new \DateTime(str_replace('.', '-', $date)));
-            $usersVisits->setVisitTime(new \DateTime($time));
-            $usersVisits->setVisitIp($ip);
-            $usersVisits->setVisitFrom($from);
-            $usersVisits->setVisitTo($to);
-
-            $entityManager->persist($usersVisits);
-
-            if (($i % $batchSize) === 0) {
-                $entityManager->flush();
-                $entityManager->clear();
-            }
-            $i++;
-        }
-        $entityManager->flush();
-        $entityManager->clear();
-
-        $k = 1;
-        $fileUserEnv = new SplFileObject("../data/user_envs.txt");
-        while (!$fileUserEnv->eof()) {
-            [$ip, $browser, $os] = $fileUserEnv->fgetcsv("|");
-
-            $usersEnvs = new UsersEnvironments();
-            $usersEnvs->setUserIp($ip);
-            $usersEnvs->setUserBrowser($browser);
-            $usersEnvs->setUserOs($os);
-
-            $entityManager->persist($usersEnvs);
-
-            if (($k % $batchSize) === 0) {
-                $entityManager->flush();
-                $entityManager->clear();
-            }
-            $k++;
-        }
-        $entityManager->flush();
-        $entityManager->clear();
+        $fileUserEnvs = new SplFileObject(self::USER_ENVS_FILE);
+        $numOfEnvs = (new ImportFiles($entityManager))
+            ->ImportFileEnvs($fileUserEnvs);
 
         return $this->render(
             'import/index.html.twig',
             [
                 'controller_name' => 'ImportController',
-                'UserVisits'      => $i,
-                'UserEnv'         => $k,
+                'UserVisits'      => $numOfVisits,
+                'UserEnv'         => $numOfEnvs,
             ]
         );
     }
