@@ -11,10 +11,22 @@
 <div class="example-wrapper">
     <h1>{{ controller_name }}</h1>
 
-    Статистика добавленных записей:
+    Statistics for added records:
     <ul>
         <li>Загружено из "user_visits.txt": <code>{{ UserVisits }}</code></li>
         <li>Загружено из "user_envs.txt":  <code>{{ UserEnv }}</code></li>
+    </ul>
+    <h3>Errors during parsing for a file ../data/user_visits.txt:</h3>
+    <ul>
+        {% for error in UserVisitsErrors %}
+            <li>[{{ error.stringNumber }}]: {{ error.invalidProperty }} / {{ error.invalidValue }} / {{ error.message }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Errors during parsing for a file ../data/user_envs.txt:</h3>
+    <ul>
+        {% for error in UserEnvErrors %}
+            <li>[{{ error.stringNumber }}]: {{ error.invalidProperty }} / {{ error.invalidValue }} / {{ error.message }}</li>
+        {% endfor %}
     </ul>
 </div>
 {% endblock %}

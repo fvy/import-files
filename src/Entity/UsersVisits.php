@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UsersVisitsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UsersVisitsRepository::class)
@@ -18,26 +19,44 @@ class UsersVisits
     private $id;
 
     /**
+     * @Assert\Type("\DateTimeInterface")
+     *
      * @ORM\Column(type="date")
      */
     private $visit_date;
 
     /**
+     * @Assert\Type("\DateTimeInterface")
+     * @var string A "H:i:s" formatted value
+     *
      * @ORM\Column(type="time")
      */
     private $visit_time;
 
     /**
+     * @Assert\Ip
      * @ORM\Column(type="string", length=15)
      */
     private $visit_ip;
 
     /**
+     * @Assert\Url(
+     *    protocols = {"http", "https", "ftp"},
+     *    payload={"severity" = "warning"},
+     *    message = "The url '{{ value }}' is not a valid url",
+     * )
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $visit_from;
 
     /**
+     * @Assert\Url(
+     *    protocols = {"http", "https", "ftp"},
+     *    payload={"severity"="warning"},
+     *    message = "The url '{{ value }}' is not a valid url",
+     * )
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $visit_to;

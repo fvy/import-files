@@ -1,5 +1,5 @@
-2012.12.21|19:10:11|111.222.333.444|http://www.aaa.com|http://www.bbb.com
-2012.12.21|19:10:11|111.222.333.444|http://www.123.com|http://www.321.com
-2012.11.22|19:10:11|111.222.333.444|http://www.test1.com|http://www.test2.com
-2012.08.21|22:01:01|123.321.122.222|www.yandex.com|www.ya.com
-2012.08.21|22:01:01|111.000.000.001||www.fido.net
+2012.12.11|19:10:11|255.255.255.555|http://www.aaa.com|www.bbb.com
+2012.12.12|19:10:11|111.222.221.134|http://www.123.com|http://www.321.com
+2012.11.13|19:10:11|111.222.222.124|http://www.test1.com|http://www.test2.com
+2012.08.14|22:01:01|123.121.122.222|www.yandex.com|www.ya.com
+2012.08.15|22:01:01|111.0.0.1|http://www.test1.com|http://www.fido.net

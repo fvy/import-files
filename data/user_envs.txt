@@ -1,6 +1,6 @@
-123.321.122.222|Firefox|Centos 9
-123.321.122.222|Chrome|Win 10
-111.222.333.444|Chrome|Win 7
+123.121.122.222|Firefox|Centos 9
+123.121.122.222|Chrome|Win 10
+111.202.212.144|Chr'ome|Win 7
 111.222.333.444|Chrome|Win 10
 111.000.000.001|Chrome|Win 3.1
 111.000.000.001|Chrome|Win 3.0

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UsersEnvironmentsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UsersEnvironmentsRepository::class)
@@ -18,6 +19,7 @@ class UsersEnvironments
     private $id;
 
     /**
+     * @Assert\Ip
      * @ORM\Column(type="string", length=15)
      */
     private $user_ip;

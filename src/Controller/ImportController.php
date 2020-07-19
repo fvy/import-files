@@ -3,9 +3,10 @@
 namespace App\Controller;
 
 use SplFileObject;
-use App\Utils\ImportFiles;
+use App\Utils\ImportFilesIntoDB;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ImportController extends AbstractController
 {
@@ -14,25 +15,31 @@ class ImportController extends AbstractController
 
     /**
      * @Route("/import", name="import")
+     * @param ValidatorInterface $validator
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index()
+    public function index(ValidatorInterface $validator)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
+        $importFilesIntoDB = new ImportFilesIntoDB($entityManager, $validator);
         $fileUserVisits = new SplFileObject(self::USER_VISIT_FILE);
-        $numOfVisits = (new ImportFiles($entityManager))
-            ->ImportFileVisits($fileUserVisits);
+        $numOfVisits = $importFilesIntoDB->ImportFileVisits($fileUserVisits);
+        $errorVisits = $importFilesIntoDB->errorsString;
 
+        $importFilesIntoDB = new ImportFilesIntoDB($entityManager, $validator);
         $fileUserEnvs = new SplFileObject(self::USER_ENVS_FILE);
-        $numOfEnvs = (new ImportFiles($entityManager))
-            ->ImportFileEnvs($fileUserEnvs);
+        $numOfEnvs = $importFilesIntoDB->ImportFileEnvs($fileUserEnvs);
+        $errorEnvs = $importFilesIntoDB->errorsString;
 
         return $this->render(
             'import/index.html.twig',
             [
-                'controller_name' => 'ImportController',
-                'UserVisits'      => $numOfVisits,
-                'UserEnv'         => $numOfEnvs,
+                'controller_name'  => 'ImportController',
+                'UserVisits'       => $numOfVisits,
+                'UserVisitsErrors' => $errorVisits,
+                'UserEnv'          => $numOfEnvs,
+                'UserEnvErrors'    => $errorEnvs,
             ]
         );
     }
