@@ -23,11 +23,11 @@ class ImportController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
 
         $importFilesIntoDB = new ImportFilesIntoDB($entityManager, $validator);
+
         $fileUserVisits = new SplFileObject(self::USER_VISIT_FILE);
         $numOfVisits = $importFilesIntoDB->ImportFileVisits($fileUserVisits);
         $errorVisits = $importFilesIntoDB->errorsString;
 
-        $importFilesIntoDB = new ImportFilesIntoDB($entityManager, $validator);
         $fileUserEnvs = new SplFileObject(self::USER_ENVS_FILE);
         $numOfEnvs = $importFilesIntoDB->ImportFileEnvs($fileUserEnvs);
         $errorEnvs = $importFilesIntoDB->errorsString;

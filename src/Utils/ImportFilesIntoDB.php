@@ -35,6 +35,7 @@ class ImportFilesIntoDB
     public function ImportFileVisits(\SplFileObject $fileUserVisits): ?int
     {
         $i = 0;
+        $this->errorsString = [];
         while (!$fileUserVisits->eof()) {
             [$date, $time, $ip, $from, $to] = $fileUserVisits->fgetcsv("|");
 
@@ -65,6 +66,7 @@ class ImportFilesIntoDB
     public function ImportFileEnvs(\SplFileObject $fileUserEnv): ?int
     {
         $i = 0;
+        $this->errorsString = [];
         while (!$fileUserEnv->eof()) {
             [$ip, $browser, $os] = $fileUserEnv->fgetcsv("|");
 
